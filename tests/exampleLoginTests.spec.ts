@@ -4,6 +4,7 @@ import { url } from 'inspector';
 
 test('Success Login', async ({ page }) => {
     const loginPage = new LoginPage(page)
+    await loginPage.open()
     await loginPage.inputUserData(process.env.EMAIL!!, process.env.PASSWORD!!)
     expect(page).toHaveURL(/.*home-page/)
 });
@@ -23,6 +24,7 @@ const loginFailedTestData = [
 for(const data of loginFailedTestData){
     test(`Unseccess login ${data.error}`, async ({ page }) => {
         const loginPage = new LoginPage(page)
+        await loginPage.open()
         await loginPage.inputUserData(data.email, data.password)
         expect(loginPage.errorMassage.textContent()).toEqual(data.error)
     });
